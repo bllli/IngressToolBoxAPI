@@ -1,3 +1,27 @@
 from django.shortcuts import render
+from django.utils import timezone
 
-# Create your views here.
+from rest_framework import serializers, mixins, viewsets
+from rest_framework.response import Response
+
+from .models import PassCode
+
+
+class DateTimeTzAwareField(serializers.DateTimeField):
+    def to_representation(self, value):
+        if value:
+            value = timezone.localtime(value)
+        return super(DateTimeTzAwareField, self).to_representation(value)
+
+
+class PassCodeSerializer(serializers.ModelSerializer):
+    created = DateTimeTzAwareField(format='%Y-%m-%d %H:%M')
+
+    class Meta:
+        model = PassCode
+        exclude = ('modified',)
+
+
+class PassCodeViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+    serializer_class = PassCodeSerializer
+    queryset = PassCode.objects.all()

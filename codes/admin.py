@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import PassCode
+
+
+@admin.register(PassCode)
+class PassCodeAdmin(admin.ModelAdmin):
+    list_display = ('code', 'message', 'created', 'checked')
