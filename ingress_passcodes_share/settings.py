@@ -25,7 +25,7 @@ SECRET_KEY = 'okrb%t@t&!^4ug&7$pf4_o(m39j^9^t=%i3(arj$7x2pq9=@3r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['xiao.bllli.cn']
 
 
 # Application definition
@@ -122,6 +122,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+STATIC_ROOT = '/home/work/static_root/'
 STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
