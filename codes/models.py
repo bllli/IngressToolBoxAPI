@@ -11,3 +11,6 @@ class PassCode(TimeStampedModel):
     class Meta:
         verbose_name = 'PassCode'
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return f'{self.code}'
