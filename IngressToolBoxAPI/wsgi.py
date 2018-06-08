@@ -1,5 +1,5 @@
 """
-WSGI config for ingress_passcodes_share project.
+WSGI config for IngressToolBoxAPI project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ingress_passcodes_share.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "IngressToolBoxAPI.settings")
 
 application = get_wsgi_application()
