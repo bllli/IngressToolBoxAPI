@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from ..models import PassCode
+from ..models import PassCode, Tag
 
 
 class PassCodeModelTest(TestCase):
@@ -14,3 +14,10 @@ class PassCodeModelTest(TestCase):
     def test_checked_default_false(self):
         p = PassCode.objects.create(code='2', message='456')
         self.assertEqual(p.checked, False)
+
+    def test_to_string(self):
+        p = PassCode.objects.create(code='asdafh324vbk', message='789')
+        self.assertEqual(p.code, str(p))
+
+        t = Tag.objects.create(name='测试Tag')
+        self.assertEqual(t.name, str(t))

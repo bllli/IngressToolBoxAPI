@@ -2,6 +2,7 @@
 Ingress ToolBox 后端
 
 [![Build Status](https://travis-ci.org/bllli/IngressToolBoxAPI.svg?branch=dev)](https://travis-ci.org/bllli/IngressToolBoxAPI)
+[![Coverage Status](https://coveralls.io/repos/github/bllli/IngressToolBoxAPI/badge.svg?branch=dev)](https://coveralls.io/github/bllli/IngressToolBoxAPI?branch=dev)
 
 
 # 需求
@@ -13,7 +14,7 @@ Ingress ToolBox 后端
 - [x] passcode查询接口 带分页
 
 ## v0.2
-- [ ] passcode 标签 允许拥有多个标签
+- [x] passcode 标签 允许拥有多个标签
 - [ ] 批量上传
 
 
