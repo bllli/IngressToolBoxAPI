@@ -15,8 +15,9 @@ Ingress ToolBox 后端
 
 ## v0.2
 - [x] passcode 标签 允许拥有多个标签
+- [x] 标签列表接口 展示各个标签passcode数量
 - [ ] 批量上传
 
 
 # 致谢
-感谢 [Django-China-API](https://github.com/DjangoChinaOrg/Django-China-API) 及其开发者、贡献者，本项目持续集成脚本、测试脚本均模仿了此项目。我本人也在此项目中收益颇丰。
+感谢 [Django-China-API](https://github.com/DjangoChinaOrg/Django-China-API) 及其开发者、贡献者，本项目持续集成脚本、测试脚本均模仿了此项目。我本人亦在此项目中收益颇丰。

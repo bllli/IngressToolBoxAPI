@@ -2,3 +2,4 @@
 omit =
     manage.py
     runtests.py
+    init.py

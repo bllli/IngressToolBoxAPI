@@ -15,7 +15,14 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         # fields = '__all__'
-        exclude = ('hide',)
+        exclude = ('hide', 'weight')
+
+
+class TagContentSerializer(TagSerializer):
+    count = serializers.SerializerMethodField()
+
+    def get_count(self, obj):
+        return obj.passcode_set.count()
 
 
 class PassCodeSerializer(serializers.ModelSerializer):

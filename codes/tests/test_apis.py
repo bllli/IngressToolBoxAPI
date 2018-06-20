@@ -41,3 +41,19 @@ class CodesViewSetsTestCase(test.APITestCase):
 
     # def test_upload_codes(self):
     #     pass
+
+    def test_tag_list(self):
+        url = reverse('tags-list')
+        response = json.loads(self.client.get(url).content)
+        # 排序
+        self.assertEqual(response[0]['name'], Tag.objects.all()[0].name)
+        self.assertEqual(
+            response[-1]['name'],
+            Tag.objects.all()[Tag.objects.count() - 1].name
+        )
+
+        # 标签对应code数量
+        self.assertEqual(
+            response[0]['count'],
+            PassCode.objects.filter(tags__name=response[0]['name']).count()
+        )
