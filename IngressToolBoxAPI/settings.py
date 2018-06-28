@@ -25,6 +25,8 @@ SECRET_KEY = 'okrb%t@t&!^4ug&7$pf4_o(m39j^9^t=%i3(arj$7x2pq9=@3r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', True)
 
+PROJECT_NAME = 'ingress_toolbox_api'
+
 ALLOWED_HOSTS = ['xiao.bllli.cn', '127.0.0.1']
 
 
@@ -53,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'IngressToolBoxAPI.middleware.LogMiddleware',
 ]
 
 ROOT_URLCONF = 'IngressToolBoxAPI.urls'
@@ -131,4 +134,54 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20
+}
+
+# logging stuff
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'normal': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
+        },
+    },
+    'handlers': {
+        'file_common': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'maxBytes': 1 * 1024 * 1024,  # 1MB
+            'backupCount': '10',
+            'filename': f'/tmp/{PROJECT_NAME}_debug.log',
+            'formatter': 'normal',
+        },
+        'error_log': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'maxBytes': 10 * 1024 * 1024,  # 1MB
+            'backupCount': '10',
+            'filename': f'/tmp/{PROJECT_NAME}_error.log',
+            'formatter': 'normal',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        }
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'file_log': {
+            'handlers': ['file_common'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'error': {
+            'handlers': ['error_log'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
 }
