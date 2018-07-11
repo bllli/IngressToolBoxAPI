@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,9 +26,15 @@ SECRET_KEY = 'okrb%t@t&!^4ug&7$pf4_o(m39j^9^t=%i3(arj$7x2pq9=@3r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', True)
 
+WXAPP_ID = os.environ.get('WXAPP_ID', '123')
+WXAPP_SECRET = os.environ.get('WXAPP_SECRET', '123')
+
 PROJECT_NAME = 'ingress_toolbox_api'
 
 ALLOWED_HOSTS = ['xiao.bllli.cn', '127.0.0.1']
+
+# LOGIN_URL = '/accounts/login/'
+# LOGIN_REDIRECT_URL = '/'
 
 
 # Application definition
@@ -44,6 +51,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # local apps
+    'accounts',
     'codes',
 ]
 
@@ -51,8 +59,9 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'accounts.jwt_middleware.JWTMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'IngressToolBoxAPI.middleware.LogMiddleware',
@@ -130,11 +139,31 @@ USE_TZ = True
 STATIC_ROOT = '/home/work/static_root/'
 STATIC_URL = '/static/'
 
+AUTH_USER_MODEL = 'accounts.User'
+
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication'
+    ),
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 20
+    'PAGE_SIZE': 20,
 }
+
+# djangorestframework-jwt settings
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=60 * 30),
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+    'JWT_ALLOW_REFRESH': True,
+}
+
+if DEBUG:
+    JWT_AUTH['JWT_EXPIRATION_DELTA'] = datetime.timedelta(days=1)
 
 # logging stuff
 LOGGING = {
